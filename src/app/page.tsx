@@ -35,10 +35,10 @@ export default function Home() {
 
     if (savedHistory) {
       setChatHistory(
-        JSON.parse(savedHistory).map((item: any) => ({
+        JSON.parse(savedHistory).map((item: ChatHistory) => ({
           ...item,
           timestamp: new Date(item.timestamp),
-          messages: item.messages.map((msg: any) => ({
+          messages: item.messages.map((msg: ChatMessage) => ({
             ...msg,
             timestamp: new Date(msg.timestamp),
           })),
@@ -48,7 +48,7 @@ export default function Home() {
 
     if (savedBookmarks) {
       setBookmarks(
-        JSON.parse(savedBookmarks).map((msg: any) => ({
+        JSON.parse(savedBookmarks).map((msg: ChatMessage) => ({
           ...msg,
           timestamp: new Date(msg.timestamp),
         }))
@@ -263,8 +263,7 @@ export default function Home() {
       <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200/50 px-6 py-4 flex-shrink-0 shadow-sm">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-            </div>
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center"></div>
             <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Clue.ai
             </h1>
@@ -329,7 +328,9 @@ export default function Home() {
             ].map(({ key, label, count }) => (
               <button
                 key={key}
-                onClick={() => setActiveTab(key as any)}
+                onClick={() =>
+                  setActiveTab(key as "chat" | "history" | "bookmarks")
+                }
                 className={`py-4 px-2 border-b-2 font-medium text-sm flex items-center space-x-2 transition-colors ${
                   activeTab === key
                     ? "border-blue-500 text-blue-600"
@@ -360,8 +361,7 @@ export default function Home() {
             <div className="space-y-6">
               {messages.length === 0 ? (
                 <div className="text-center py-16">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  </div>
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4"></div>
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">
                     Clue.aiへようこそ！
                   </h2>
